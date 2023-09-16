@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const colorVariants = ["black", "white", "blue"];
@@ -15,19 +16,16 @@ const imageUrls = {
 };
 
 export default function ProductPage() {
+  const router = useRouter();
+
   const [selectedColor, setSelectedColor] = useState(colorVariants[0]);
   const [selectedSize, setSelectedSize] = useState(sizeVariants[2]);
 
-  //   const selectedColor = "black";
-  //   const selectedSize = "md";
-
   useEffect(() => {
-    window.history.pushState(
-      null,
-      "",
-      `?color=${selectedColor}&size=${selectedSize}`
-    );
-  }, [selectedColor, selectedSize]);
+    router.push(`?color=${selectedColor}&size=${selectedSize}`, {
+      scroll: false,
+    });
+  }, [selectedColor, selectedSize, router]);
 
   return (
     <main className="min-h-screen bg-gray-200 flex items-center justify-center  text-gray-800">
