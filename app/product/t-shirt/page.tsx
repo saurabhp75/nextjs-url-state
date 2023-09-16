@@ -18,8 +18,10 @@ export default function ProductPage({
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const selectedColor = searchParams.color || "black";
-  const selectedSize = searchParams.size || "xs";
+  const selectedColor = (searchParams.color || "black") as string;
+  const selectedSize = (searchParams.size || "xs") as string;
+
+  // use router.replace() if you don't want to add to history
 
   return (
     <main className="min-h-screen bg-gray-200 flex items-center justify-center  text-gray-800">
@@ -51,7 +53,10 @@ export default function ProductPage({
                 {colorVariants.map((color, index) => (
                   <Link
                     key={index}
-                    href={`?color=${color}&size=${selectedSize}`}
+                    href={`?${new URLSearchParams({
+                      color,
+                      size: selectedSize,
+                    })}`}
                     className={`bg-gray-100 px-4 py-1 rounded-full border-2 ${
                       selectedColor === color
                         ? "border-blue-500"
@@ -69,7 +74,10 @@ export default function ProductPage({
               {sizeVariants.map((size, index) => (
                 <Link
                   key={index}
-                  href={`?color=${selectedColor}&size=${size}`}
+                  href={`?${new URLSearchParams({
+                    color: selectedColor,
+                    size,
+                  })}`}
                   className={`bg-gray-100 px-4 py-1 rounded-full border-2 ${
                     selectedSize === size
                       ? "border-blue-500"
