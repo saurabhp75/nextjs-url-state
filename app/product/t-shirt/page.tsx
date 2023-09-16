@@ -25,13 +25,16 @@ export default function ProductPage({
     <main className="min-h-screen bg-gray-200 flex items-center justify-center  text-gray-800">
       <div className="bg-white flex items-center w-[96%] rounded min-h-[75vh]">
         <div className="flex-[2] flex justify-center">
-          <Image
-            /// @ts-ignore
-            src={imageUrls[selectedColor]}
-            alt="Shirt variant"
-            width={622}
-            height={550}
-          />
+          <div className="relative w-[622px] h-[550px]">
+            <Image
+              /// @ts-ignore
+              src={imageUrls[selectedColor]}
+              alt="Shirt variant"
+              priority={true}
+              fill={true}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          </div>
         </div>
 
         <div className="flex-1">
