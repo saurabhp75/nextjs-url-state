@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 
 const colorVariants = ["black", "white", "blue"];
 const sizeVariants = ["xs", "s", "md", "l", "xl"];
@@ -15,10 +12,14 @@ const imageUrls = {
     "https://demo.vercel.store/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0754%2F3727%2F7491%2Ffiles%2Ft-shirt-2.png%3Fv%3D1689798965&w=1080&q=75",
 };
 
-export default function ProductPage() {
-  const searchParams = useSearchParams();
-  const selectedColor = searchParams.get("color") || "black";
-  const selectedSize = searchParams.get("size") || "xs";
+export default function ProductPage({
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const selectedColor = searchParams.color || "black";
+  const selectedSize = searchParams.size || "xs";
 
   return (
     <main className="min-h-screen bg-gray-200 flex items-center justify-center  text-gray-800">
