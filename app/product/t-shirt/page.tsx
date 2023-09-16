@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const colorVariants = ["black", "white", "blue"];
 const sizeVariants = ["xs", "s", "md", "l", "xl"];
@@ -16,16 +16,9 @@ const imageUrls = {
 };
 
 export default function ProductPage() {
-  const router = useRouter();
-
-  const [selectedColor, setSelectedColor] = useState(colorVariants[0]);
-  const [selectedSize, setSelectedSize] = useState(sizeVariants[2]);
-
-  useEffect(() => {
-    router.push(`?color=${selectedColor}&size=${selectedSize}`, {
-      scroll: false,
-    });
-  }, [selectedColor, selectedSize, router]);
+  const searchParams = useSearchParams();
+  const selectedColor = searchParams.get("color") || "black";
+  const selectedSize = searchParams.get("size") || "xs";
 
   return (
     <main className="min-h-screen bg-gray-200 flex items-center justify-center  text-gray-800">
@@ -52,17 +45,17 @@ export default function ProductPage() {
 
               <div className="flex gap-2">
                 {colorVariants.map((color, index) => (
-                  <button
+                  <Link
                     key={index}
+                    href={`?color=${color}&size=${selectedSize}`}
                     className={`bg-gray-100 px-4 py-1 rounded-full border-2 ${
                       selectedColor === color
                         ? "border-blue-500"
                         : "border-gray-200"
                     }`}
-                    onClick={() => setSelectedColor(color)}
                   >
                     {color.charAt(0).toUpperCase() + color.slice(1)}
-                  </button>
+                  </Link>
                 ))}
               </div>
             </section>
@@ -70,17 +63,17 @@ export default function ProductPage() {
             <section>
               <h2 className="text-md mb-2 uppercase">Sizes</h2>
               {sizeVariants.map((size, index) => (
-                <button
+                <Link
                   key={index}
+                  href={`?color=${selectedColor}&size=${size}`}
                   className={`bg-gray-100 px-4 py-1 rounded-full border-2 ${
                     selectedSize === size
                       ? "border-blue-500"
                       : "border-gray-200"
                   }`}
-                  onClick={() => setSelectedSize(size)}
                 >
                   {size.toUpperCase()}
-                </button>
+                </Link>
               ))}
             </section>
           </div>
