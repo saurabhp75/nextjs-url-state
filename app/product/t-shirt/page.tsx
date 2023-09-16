@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const colorVariants = ["black", "white", "blue"];
 const sizeVariants = ["xs", "s", "md", "l", "xl"];
@@ -20,6 +20,14 @@ export default function ProductPage() {
 
   //   const selectedColor = "black";
   //   const selectedSize = "md";
+
+  useEffect(() => {
+    window.history.pushState(
+      null,
+      "",
+      `?color=${selectedColor}&size=${selectedSize}`
+    );
+  }, [selectedColor, selectedSize]);
 
   return (
     <main className="min-h-screen bg-gray-200 flex items-center justify-center  text-gray-800">
